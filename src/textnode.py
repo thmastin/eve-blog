@@ -1,21 +1,24 @@
 from enum import Enum
 
+# Enum representing different types of inline text elements in markdown
 class TextType(Enum):
     NORMAL = "text"
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
     LINKS = "links"
-    IMAGS = "image"
+    IMAGES = "image"
 
-class Textnode(text, text_type, url=None):
-    def __init__(self, text, text_type, url):
+class TextNode:
+    """Represents an inline text element in markdown with its formatting and optional URL"""
+    def __init__(self, text, text_type, url=None):
         self.text = text
         self.text_type = text_type
         self.url = url
 
-    def __eq__(other, Textnode):
-        if isinstance(other, Textnode):
+    def __eq__(other, other):
+        """Returns True if all properties of both nodes are equal"""
+        if isinstance(other, TextNode):
             return (
                 self.text == other.text and
                 self.text_type == other.text_type and
@@ -24,4 +27,5 @@ class Textnode(text, text_type, url=None):
         return False
 
     def __repr__(self):
+        """Returns string representation of the TextNode"""
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"    
