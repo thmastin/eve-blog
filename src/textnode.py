@@ -16,7 +16,7 @@ class TextNode:
         self.text_type = text_type
         self.url = url
 
-    def __eq__(other, other):
+    def __eq__(self, other):
         """Returns True if all properties of both nodes are equal"""
         if isinstance(other, TextNode):
             return (
