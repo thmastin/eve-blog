@@ -14,9 +14,9 @@ class HTMLNode:
         """Returns a string that represents the HTML atributes of the node"""
         output = ""
         for prop in self.props:
-            output = output + f' {prop}={self.props[prop]}'
+            output = output + f' {prop}="{self.props[prop]}"'
         return output
     
     def __repr__(self):
         """Returns string representation of the HTMLNode"""
-        return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"    
+        return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
