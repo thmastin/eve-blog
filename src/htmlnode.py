@@ -13,6 +13,10 @@ class HTMLNode:
     def props_to_html(self):
         """Returns a string that represents the HTML atributes of the node"""
         output = ""
+        #Check for no props or empty props
+        if self.props == None or self.props == {}:
+            return output
+        #Create properties string and output
         for prop in self.props:
             output = output + f' {prop}="{self.props[prop]}"'
         return output
