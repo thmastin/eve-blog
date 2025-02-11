@@ -29,6 +29,16 @@ class TestTextNode(unittest.TestCase):
         node = HTMLNode(props=properties)
         output = ' href="https://www.google.com" target="_blank" lang="en"'
         self.assertEqual(node.props_to_html(), output) 
+
+    def test_empty_props(self):
+        node = HTMLNode()
+        output = ""
+        self.assertEqual(node.props_to_html(), output)
+    
+    def test_empty_dict_props(self):
+        node = HTMLNode(props={})
+        output = ""
+        self.assertEqual(node.props_to_html(), output)
         
 
 
