@@ -29,3 +29,10 @@ class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
         super().__init__(tag, value, props)
     """Represents a single HTML tag with no children"""
+
+    def to_html(self):
+        if self.value == None:
+            raise ValueError("Must have a value")
+        if self.tag == None:
+            return f"{self.value}"
+                
