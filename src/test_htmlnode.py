@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 
 
 class TestTextNode(unittest.TestCase):
@@ -39,7 +39,36 @@ class TestTextNode(unittest.TestCase):
         node = HTMLNode(props={})
         output = ""
         self.assertEqual(node.props_to_html(), output)
-        
+
+    def test_leaf_no_value(self):
+        node = LeafNode(tag=None, value=None)
+        with self.assertRaises(ValueError):
+            node.to_html()
+
+    def test_leaf_no_tag(self):
+        node = LeafNode(tag=None, value="This is plain text")
+        output = "This is plain text"
+        self.assertEqual(node.to_html(), output)
+
+    def test_leaf_tag_and_value(self):
+        node = LeafNode("p", "This is a paragraph of text.")
+        output = "<p>This is a paragraph of text.</p>"
+        self.assertEqual(node.to_html(), output)
+
+    def test_leaf_tag_value_and_props(self):
+        node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+        output = '<a href="https://www.google.com">Click me!</a>'
+        self.assertEqual(node.to_html(), output)
+    
+    def test_leaf_empty_string_value(self):
+        node = LeafNode(tag=None, value="")
+        output = ""
+        self.assertEqual(node.to_html(), output)
+
+    def test_lef_empty_string_tag(self):
+        node = LeafNode("", "This is invalid HTML")
+        output = '<>This is invalid HTML</>'
+        self.assertEqual(node.to_html(), output)
 
 
 if __name__ == "__main__":
