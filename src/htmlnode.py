@@ -46,8 +46,10 @@ class ParentNode(HTMLNode):
     """Represesnts a parent HTML tag with children"""
     
     def to_html(self):
+        #RChecks for tag
         if self.tag == None:
             raise ValueError("Must have a tag")
+        #Checks for children
         if self.children == None:
             raise ValueError("Must have children")
                 
