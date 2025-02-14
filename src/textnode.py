@@ -1,8 +1,9 @@
 from enum import Enum
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 # Enum representing different types of inline text elements in markdown
 class TextType(Enum):
-    NORMAL = "text"
+    TEXT = "text"
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
@@ -29,3 +30,16 @@ class TextNode:
     def __repr__(self):
         """Returns string representation of the TextNode"""
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"    
+    
+def text_node_to_html_node(text_node):
+    
+    """Turns a TextNode object into a LeafNode based on the type of TextNode"""
+    
+    match text_node.type:
+        case TextType.TEXT:
+            return LeafNode(None, text_node.text)
+        case _:
+            raise Exception(f"Invalid text type: {text_node.type}")
+        
+
+
