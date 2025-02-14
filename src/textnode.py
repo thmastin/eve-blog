@@ -7,7 +7,7 @@ class TextType(Enum):
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
-    LINKS = "links"
+    LINKS = "link"
     IMAGES = "image"
 
 class TextNode:
@@ -35,11 +35,11 @@ def text_node_to_html_node(text_node):
     
     """Turns a TextNode object into a LeafNode based on the type of TextNode"""
     
-    match text_node.type:
+    match text_node.text_type:
         case TextType.TEXT:
             return LeafNode(None, text_node.text)
         case _:
-            raise Exception(f"Invalid text type: {text_node.type}")
+            raise Exception(f"Invalid text type: {text_node.text_type}")
         
 
 
