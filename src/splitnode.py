@@ -9,7 +9,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         else: 
             is_delimited = False
             parts = node.text.split(delimiter)
-            if len(parts) % 2 == 1:
+            if len(parts) % 2 == 0:
                 raise Exception(f"Invalid Markdown Syntax: Must have closing {delimiter}")
             for part in parts:
                 if not is_delimited:
