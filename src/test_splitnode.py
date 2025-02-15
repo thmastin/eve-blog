@@ -27,11 +27,8 @@ class TestSplitNodes(unittest.TestCase):
         # Check if the exception message matches
         self.assertEqual(
             str(context.exception), "Invalid Markdown Syntax: Must have closing **"
-        )
+        ) 
     
-
-    def test_placeholder(self):
-        pass
 
 if __name__ == "__main__":
     unittest.main()
