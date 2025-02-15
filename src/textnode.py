@@ -7,8 +7,8 @@ class TextType(Enum):
     BOLD = "bold"
     ITALIC = "italic"
     CODE = "code"
-    LINKS = "link"
-    IMAGES = "image"
+    LINK = "link"
+    IMAGE = "image"
 
 class TextNode:
     """Represents an inline text element in markdown with its formatting and optional URL"""
@@ -44,10 +44,15 @@ def text_node_to_html_node(text_node):
             return LeafNode("i", text_node.text)
         case TextType.CODE:
             return LeafNode("code", text_node.text)
-        case TextType.LINKS:
-            return LeafNode("a", text_node.text,text_node.props["href"] )
-        case TextType.IMAGES:
-            return LeafNode("img", "", text_node["src", "alt"])
+        case TextType.LINK:
+            props = {"href": text_node.url}
+            return LeafNode("a", text_node.text, props)
+        case TextType.IMAGE:
+            props = {
+                "src": text_node.url,
+                "alt": text_node.text
+            }
+            return LeafNode("img", "", props)
         case _:
             raise Exception(f"Invalid text type: {text_node.text_type}")
         
