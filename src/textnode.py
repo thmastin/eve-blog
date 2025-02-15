@@ -1,5 +1,5 @@
 from enum import Enum
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from htmlnode import LeafNode
 
 # Enum representing different types of inline text elements in markdown
 class TextType(Enum):
