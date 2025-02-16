@@ -29,6 +29,22 @@ class TestSplitNodes(unittest.TestCase):
             str(context.exception), "Invalid Markdown Syntax: Must have closing **"
         ) 
     
+    def test_one_delimiter(self):
+        # Input: A single TextNode with properly paired bold delimiters
+        node = TextNode("This is normal. **This is bold.** This is normal", TextType.TEXT)
+        
+        # Expected Output: Split into three nodes
+        expected_output = [
+            TextNode("This is normal. ", TextType.TEXT),
+            TextNode("This is bold.", TextType.BOLD),
+            TextNode(" This is normal", TextType.TEXT),
+        ]
+        
+        # Call the split_nodes_delimiter function
+        actual_output = split_nodes_delimiter([node], "**", TextType.BOLD)
+        
+        # Assert equality
+        self.assertEqual(actual_output, expected_output)
 
 if __name__ == "__main__":
     unittest.main()
