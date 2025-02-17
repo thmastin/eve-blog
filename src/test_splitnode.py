@@ -54,7 +54,7 @@ class TestSplitNodes(unittest.TestCase):
         expected_output = [
             TextNode("This is normal. ", TextType.TEXT),
             TextNode("This is bold.", TextType.BOLD),
-            TextNode(" This is normal  ", TextType.TEXT),
+            TextNode(" This is normal ", TextType.TEXT),
             TextNode("This is bold.", TextType.BOLD),
         ]
 
@@ -62,6 +62,38 @@ class TestSplitNodes(unittest.TestCase):
         actual_output = split_nodes_delimiter([node], "**", TextType.BOLD)
 
         #Assert equality
+        self.assertEqual(actual_output, expected_output)
+
+    def test_leading_delimiter(self):
+        # Input a single TextNode wtih one set of properly paired bold delimiters at the start of the node
+        node = TextNode("**This is bold** This is normal", TextType.TEXT)
+
+        # Expected output. Split into two nodes with a leading bold node.
+        expected_output = [
+            TextNode("This is bold", TextType.BOLD),
+            TextNode(" This is normal", TextType.TEXT),
+        ]
+
+        # Call the gplit_node_delimiter_function
+        actual_output = split_nodes_delimiter([node], "**", TextType.BOLD)
+
+        # Assert equality
+        self.assertEqual(actual_output, expected_output)
+
+    def test_trailing_delimiter(self):
+        # Input a single TextNode wtih one set of properly paired bold delimiters at the start of the node
+        node = TextNode("This is normal. **This is bold**", TextType.TEXT)
+
+        # Expected output. Split into two nodes with a leading bold node.
+        expected_output = [
+            TextNode("This is normal. ", TextType.TEXT),
+            TextNode("This is bold", TextType.BOLD),
+        ]
+
+        # Call the gplit_node_delimiter_function
+        actual_output = split_nodes_delimiter([node], "**", TextType.BOLD)
+
+        # Assert equality2
         self.assertEqual(actual_output, expected_output)
 
 
