@@ -81,7 +81,7 @@ class TestSplitNodes(unittest.TestCase):
         self.assertEqual(actual_output, expected_output)
 
     def test_trailing_delimiter(self):
-        # Input a single TextNode wtih one set of properly paired bold delimiters at the start of the node
+        # Input a single TextNode wtih one set of properly paired bold delimiters at the end of the node
         node = TextNode("This is normal. **This is bold**", TextType.TEXT)
 
         # Expected output. Split into two nodes with a leading bold node.
@@ -96,7 +96,17 @@ class TestSplitNodes(unittest.TestCase):
         # Assert equality2
         self.assertEqual(actual_output, expected_output)
 
+    def test_double_delimiter(self):
+        # Input a TextNode with two sets of properly paired bold delimiters on the same text
+        node = TextNode("This is normal. ** **This is bold** ** This is normal.", TextType.TEXT)
 
+        with self.assertRaises(Exception) as context:
+            split_nodes_delimiter([node], "**", TextType.BOLD)
+
+        # Check if the exception message matches
+        self.assertEqual(
+            str(context.exception), "Invalide Markdown Syntax: Must have text in between opening and closing **")
+        
 if __name__ == "__main__":
     unittest.main()
         
