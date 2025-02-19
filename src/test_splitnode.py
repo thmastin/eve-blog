@@ -116,6 +116,16 @@ class TestSplitNodes(unittest.TestCase):
 
         # Assert equality
         self.assertEqual(extract_markdown_images(text), expected_output)
+
+    def test_link_extraction(self):
+        # Input a string with markdown for links embedded
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+
+        # Expected output: A list of tuples consisting of the anchor text and url of the image
+        expected_output = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+
+        # Assert equality
+        self.assertEqual(extract_markdown_links(text), expected_output)
          
         
 if __name__ == "__main__":
