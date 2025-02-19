@@ -1,6 +1,6 @@
 import unittest
 
-from splitnode import split_nodes_delimiter
+from splitnode import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 from textnode import TextNode, TextType
 
 class TestSplitNodes(unittest.TestCase):
@@ -93,7 +93,7 @@ class TestSplitNodes(unittest.TestCase):
         # Call the gplit_node_delimiter_function
         actual_output = split_nodes_delimiter([node], "**", TextType.BOLD)
 
-        # Assert equality2
+        # Assert equality
         self.assertEqual(actual_output, expected_output)
 
     def test_double_delimiter(self):
@@ -106,6 +106,17 @@ class TestSplitNodes(unittest.TestCase):
         # Check if the exception message matches
         self.assertEqual(
             str(context.exception), "Invalide Markdown Syntax: Must have text in between opening and closing **")
+        
+    def test_image_extraction(self):
+        # Input a string with markdown for image embedded
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        # Expected output: A list of tuples consisting of the alt text and url of the image
+        expected_output = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+
+        # Assert equality
+        self.assertEqual(extract_markdown_images(text), expected_output)
+         
         
 if __name__ == "__main__":
     unittest.main()
