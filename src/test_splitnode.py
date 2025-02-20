@@ -126,6 +126,16 @@ class TestSplitNodes(unittest.TestCase):
 
         # Assert equality
         self.assertEqual(extract_markdown_links(text), expected_output)
+
+    def test_image_no_alt_text_extraction(self):
+        # Input a string with markdown for image embedded with no alt text
+        text = "This is text with a ![](https://i.imgur.com/aKaOqIh.gif) and ![](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        # Expected output: A list of tuples consisting of the alt text and url of the image
+        expected_output = [("", "https://i.imgur.com/aKaOqIh.gif"), ("", "https://i.imgur.com/fJRm4Vk.jpeg")]
+
+        # Assert equality
+        self.assertEqual(extract_markdown_images(text), expected_output)
          
         
 if __name__ == "__main__":
