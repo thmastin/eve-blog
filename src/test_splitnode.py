@@ -165,6 +165,24 @@ class TestSplitNodes(unittest.TestCase):
 
         # Assert equality
         self.assertEqual([node], expected_output)
+
+    def test_split_images_leading(self):
+        # Input a TextNode with multiple images
+        node = TextNode(
+            "![to boot dev](https://www.boot.dev) and ![to youtube](https://www.youtube.com/@bootdotdev)",
+            TextType.TEXT,
+        )
+        
+
+        # Expected output: A list of new TextNodes with the text in TEXT format and the image in IMAGE format
+        expected_output = [
+            TextNode("to boot dev", TextType.IMAGE, "https://www.boot.dev"),
+            TextNode(" and ", TextType.TEXT),
+            TextNode("to youtube", TextType.IMAGE, "https://www.youtube.com/@bootdotdev"),
+        ]
+
+        # Assert equality
+        self.assertEqual(split_nodes_image([node]), expected_output)   
         
 if __name__ == "__main__":
     unittest.main()
