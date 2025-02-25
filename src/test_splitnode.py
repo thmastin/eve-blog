@@ -199,8 +199,77 @@ class TestSplitNodes(unittest.TestCase):
         ]
 
         # Assert equality
-        self.assertEqual(split_nodes_image([node]), expected_output)   
+        self.assertEqual(split_nodes_image([node]), expected_output)
+
+    def test_split_imaages_back_to_back(self):
+        # input a TextNode with no string in between two images
+        node = TextNode("![first image](https://imageone.test)![second image](https://imagetwo.test)", TextType.TEXT)
+
+        # Expected ouput: A list of two TextNodes with TextType.IMAGE
+        expected_output = [
+            TextNode("first image", TextType.IMAGE, "https://imageone.test"),
+            TextNode("second image", TextType.IMAGE, "https://imagetwo.test"),
+        ]
+
+        #Assert equality
+        self.assertEqual(split_nodes_image([node]), expected_output)
+
+    def test_split_images_empty(self):
+        # Input an empty TextNode
+        node = TextNode("", TextType.TEXT)
+
+        # Expected output: Empty list due to base case
+        expected_output = []
+
+        # Assert Equality
+        self.assertEqual(split_nodes_image([node]), expected_output)
+
+    def test_split_images_image_and_link(self):
+        # Input a TExtNode that has both an image and link inside of it.
+        node = TextNode(
+            "This node has an image and a link. ![first image](https://imageone.test) and [link one](https://linkone.test)", TextType.TEXT
+        )
+
+        # Expected output: A text node with text, a text node with image and a text node with text contatinging the link unchanged
+        expected_output = [
+            TextNode("This node has an image and a link. ", TextType.TEXT),
+            TextNode('first image', TextType.IMAGE, "https://imageone.test"),
+            TextNode(" and [link one](https://linkone.test)", TextType.TEXT)
+        ]
+
+        # Assert equality
+        self.assertEqual(split_nodes_image([node]), expected_output)
+
+    def test_split_images_malformed_image(self):
+        # Input a textNode that has a malformed image link
+        node = TextNode("This has a broken image in it ![image one (https://imageone.text)", TextType.TEXT)
+
+        # Expected output: A list with an unchanged textNode
+        expected_output = [
+            TextNode("This has a broken image in it ![image one (https://imageone.text)", TextType.TEXT),
+        ] 
         
+        # Assert equality
+        self.assertEqual(split_nodes_image([node]), expected_output)
+
+    def test_split_images_list_input(self):
+        # INput a list with multiple TextNode objects
+        node = [
+            TextNode("This is a node with an image ![image one](https://imageone.test)", TextType.TEXT),
+            TextNode("This is a second node with an image ![image two](https://imagetwo.text)", TextType.TEXT),
+        ]
+
+        # Expected output: A list with all the nodes
+        expected_output = [
+            TextNode("This is a node with an image ", TextType.TEXT),
+            TextNode("image one", TextType.IMAGE, "https://imageone.test"),
+            TextNode("This is a second node with an image ", TextType.TEXT),
+            TextNode("image two", TextType.IMAGE, "https://imagetwo.text"),
+        ]
+
+        # Assert equality
+        self.assertEqual(split_nodes_image(node), expected_output)
+
 if __name__ == "__main__":
     unittest.main()
         
