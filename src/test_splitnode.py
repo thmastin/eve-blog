@@ -183,6 +183,23 @@ class TestSplitNodes(unittest.TestCase):
 
         # Assert equality
         self.assertEqual(split_nodes_image([node]), expected_output)   
+    
+    def test_split_images_trailing(self):
+        # Input a TextNode with multiple images
+        node = TextNode(
+            "This is a trailing image ![to youtube](https://www.youtube.com/@bootdotdev)",
+            TextType.TEXT,
+        )
+        
+
+        # Expected output: A list of new TextNodes with the text in TEXT format and the image in IMAGE format
+        expected_output = [
+            TextNode("This is a trailing image ", TextType.TEXT),
+            TextNode("to youtube", TextType.IMAGE, "https://www.youtube.com/@bootdotdev"),
+        ]
+
+        # Assert equality
+        self.assertEqual(split_nodes_image([node]), expected_output)   
         
 if __name__ == "__main__":
     unittest.main()
