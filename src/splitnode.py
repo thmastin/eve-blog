@@ -61,10 +61,10 @@ def split_nodes_links(old_nodes):
         else:
             anchor_text = extracted_links[0][0]
             url = extracted_links[0][1]
-            split_node = node.text.split(f"![{anchor_text}]({url})", 1)
+            split_node = node.text.split(f"[{anchor_text}]({url})", 1)
             if split_node[0] != "":
                 new_nodes.append(TextNode(split_node[0], TextType.TEXT))
-            new_nodes.append(TextNode(anchor_text, TextType.IMAGE, url))
+            new_nodes.append(TextNode(anchor_text, TextType.LINK, url))
             remaining_node = TextNode(split_node[1], TextType.TEXT)
             new_nodes.extend(split_nodes_links([remaining_node]))
     return new_nodes

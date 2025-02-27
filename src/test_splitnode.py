@@ -1,6 +1,6 @@
 import unittest
 
-from splitnode import split_nodes_delimiter, extract_markdown_images, extract_markdown_links,split_nodes_image
+from splitnode import split_nodes_delimiter, extract_markdown_images, extract_markdown_links,split_nodes_image, split_nodes_links
 from textnode import TextNode, TextType
 
 class TestSplitNodes(unittest.TestCase):
@@ -269,6 +269,19 @@ class TestSplitNodes(unittest.TestCase):
 
         # Assert equality
         self.assertEqual(split_nodes_image(node), expected_output)
+
+    def test_split_links(self):
+        # INput a textNode that contains a link
+        node = TextNode("This is a TextNode that containg a link to [Google](https://www.google.com)", TextType.TEXT)
+
+        # Exptected output: A list with a TEXT type node and a LINK type node
+        expected_output = [
+            TextNode("This is a TextNode that containg a link to ", TextType.TEXT),
+            TextNode("Google", TextType.LINK, "https://www.google.com"),
+        ]
+
+        # Assert equlity
+        self.assertEqual(split_nodes_links([node]), expected_output)
 
 if __name__ == "__main__":
     unittest.main()
