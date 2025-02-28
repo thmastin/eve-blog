@@ -1,6 +1,6 @@
 import unittest
 
-from splitnode import split_nodes_delimiter, extract_markdown_images, extract_markdown_links,split_nodes_image, split_nodes_links
+from splitnode import split_nodes_delimiter, extract_markdown_images, extract_markdown_links,split_nodes_image, split_nodes_links, text_to_textnodes
 from textnode import TextNode, TextType
 
 class TestSplitNodes(unittest.TestCase):
@@ -378,6 +378,27 @@ class TestSplitNodes(unittest.TestCase):
         
         # Assert Equality
         self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_text_to_textnodes(self):
+        # Input a string return a list of text nodes
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+
+        # Expected Output: A list with node split into it's component parts
+        expected_output = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+
+        # Assert Equality
+        self.assertEqual(text_to_textnodes(text), expected_output)
             
     
                         

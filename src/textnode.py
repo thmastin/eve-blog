@@ -1,6 +1,7 @@
 from enum import Enum
 from htmlnode import LeafNode
 
+
 # Enum representing different types of inline text elements in markdown
 class TextType(Enum):
     TEXT = "text"
@@ -55,6 +56,8 @@ def text_node_to_html_node(text_node):
             return LeafNode("img", "", props)
         case _:
             raise Exception(f"Invalid text type: {text_node.text_type}")
+        
+
         
 
 
