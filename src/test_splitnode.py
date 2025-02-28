@@ -272,16 +272,117 @@ class TestSplitNodes(unittest.TestCase):
 
     def test_split_links(self):
         # INput a textNode that contains a link
-        node = TextNode("This is a TextNode that containg a link to [Google](https://www.google.com)", TextType.TEXT)
+        node = TextNode("This is a TextNode that containg a link to [Google](https://www.google.com) in the text", TextType.TEXT)
 
         # Exptected output: A list with a TEXT type node and a LINK type node
         expected_output = [
             TextNode("This is a TextNode that containg a link to ", TextType.TEXT),
             TextNode("Google", TextType.LINK, "https://www.google.com"),
+            TextNode(" in the text", TextType.TEXT),
         ]
 
         # Assert equlity
         self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_no_link(self):
+        # Input a TextNode that does not contain a link
+        node = TextNode("This is a node with no links.", TextType.TEXT)
+
+        # Expected ouput: A single TextNode with the plain text.
+        expected_output = [TextNode("This is a node with no links.", TextType.TEXT),]
+
+        # Assert Equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_muliple_links(self):
+        # Input a TextNode that contains multiple links
+        node = TextNode("Test [linkone](https://linkone.test) Test 2 [linktwo](https://linktwo.test)", TextType.TEXT)
+
+        # Expected ouput: A text object, a link, a text object and a second link.
+        expected_output = [
+            TextNode("Test ", TextType.TEXT),
+            TextNode("linkone", TextType.LINK, "https://linkone.test"),
+            TextNode(" Test 2 ", TextType.TEXT),
+            TextNode("linktwo", TextType.LINK, "https://linktwo.test"),
+        ]
+
+        # Assert Equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_back_to_back(self):
+        # Input a TextNode that contains multiple links back to back
+        node = TextNode("[linkone](https://linkone.test)[linktwo](https://linktwo.test)", TextType.TEXT)
+
+        # Expected ouput: two Link Textodes
+        expected_output = [
+            TextNode("linkone", TextType.LINK, "https://linkone.test"),
+            TextNode("linktwo", TextType.LINK, "https://linktwo.test"),
+        ]
+
+        # Assert Equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+
+    def test_split_links_empty(self):
+        # Input an empty TextNode
+        node = TextNode("", TextType.TEXT)
+
+        # Expected output: Empty list due to base case
+        expected_output = []
+
+        # Assert Equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_malformed_link(self):
+        # Input a textNode that has a malformed image link
+        node = TextNode("This has a broken link in it [link one (https://linkone.text)", TextType.TEXT)
+
+        # Expected output: A list with an unchanged textNode
+        expected_output = [
+            TextNode("This has a broken link in it [link one (https://linkone.text)", TextType.TEXT),
+        ] 
+        
+        # Assert equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_image_and_links(self):
+        # Input a text node with both an image and link
+        node = TextNode("This is an image link ![image one](https://imageone.test) and this is a [link](https://linkone.test)", TextType.TEXT)
+
+        # Expected output: Ignore the image link and split the text link
+        expected_output = [
+            TextNode("This is an image link ![image one](https://imageone.test) and this is a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://linkone.test"),
+        ]
+
+        # Asstert equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+
+    def test_split_links_long_text(self):
+        # Input a TextNode with a long string and multiple links
+        node = TextNode(
+            "Here's a longer piece of text that contains multiple links for testing. The first link is [Google](http://google.com) which is a popular search engine. After that, we have some more words to stretch things out before hitting the next link, which is [Wikipedia](http://wikipedia.org) - a great resource for knowledge. Finally, after even more text to make this feel like a real paragraph, check out [xAI](http://xai.ai) for some cool AI stuff.",
+            TextType.TEXT
+        )
+
+        # Expected output: Multiple Test type nodes and link nodes
+        expected_output = [
+            TextNode("Here's a longer piece of text that contains multiple links for testing. The first link is ", TextType.TEXT),  
+            TextNode("Google", TextType.LINK, "http://google.com"), 
+            TextNode(" which is a popular search engine. After that, we have some more words to stretch things out before hitting the next link, which is ", TextType.TEXT),
+            TextNode("Wikipedia", TextType.LINK, "http://wikipedia.org"),
+            TextNode(" - a great resource for knowledge. Finally, after even more text to make this feel like a real paragraph, check out ", TextType.TEXT),
+            TextNode("xAI", TextType.LINK, "http://xai.ai"),
+            TextNode(" for some cool AI stuff.", TextType.TEXT),
+        ]
+        
+        # Assert Equality
+        self.assertEqual(split_nodes_links([node]), expected_output)
+            
+    
+                        
+
+    
 
 if __name__ == "__main__":
     unittest.main()
