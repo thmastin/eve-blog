@@ -10,7 +10,6 @@ class BlockType(Enum):
 
 def block_to_block_type(block):
     split = block.split(" ")
-    lines_split = block.split("\n")
     if split[0].startswith("#") and 1 <= split[0].count("#") <= 6:
         return BlockType.HEADING
     elif block.startswith("```") and block.endswith("```"):
@@ -19,3 +18,11 @@ def block_to_block_type(block):
         return BlockType.QUOTE
     elif all(line.startswith("- ") for line in block.split("\n")):
         return BlockType.UNORDERED_LIST
+    elif block.split("\n"):
+        lines = block.split("\n")
+        i = 1
+        for line in lines:
+            if not line.startswith(f"{i}. "):
+                return False
+            i += 1
+        return BlockType.ORDERED_LIST

@@ -27,6 +27,12 @@ class TestBlockType(unittest.TestCase):
         block_type = block_to_block_type(block)
 
         self.assertIs(block_type, BlockType.UNORDERED_LIST)
+    
+    def test_ordered_list(self):
+        block = "1. line one\n2. line two\n3. line three"
+        block_type = block_to_block_type(block)
+
+        self.assertIs(block_type, BlockType.ORDERED_LIST)
 
     
 
