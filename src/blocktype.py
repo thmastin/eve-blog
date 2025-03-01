@@ -18,11 +18,13 @@ def block_to_block_type(block):
         return BlockType.QUOTE
     elif all(line.startswith("- ") for line in block.split("\n")):
         return BlockType.UNORDERED_LIST
-    elif block.split("\n"):
+    elif True:
         lines = block.split("\n")
         i = 1
         for line in lines:
             if not line.startswith(f"{i}. "):
-                return False
+                break
             i += 1
-        return BlockType.ORDERED_LIST
+        else: 
+            return BlockType.ORDERED_LIST
+    return BlockType.PARAGRAPH

@@ -33,6 +33,12 @@ class TestBlockType(unittest.TestCase):
         block_type = block_to_block_type(block)
 
         self.assertIs(block_type, BlockType.ORDERED_LIST)
+    
+    def test_paragraph(self):
+        block = "This is a paragraph"
+        block_type = block_to_block_type(block)
+
+        self.assertIs(block_type, BlockType.PARAGRAPH)
 
     
 
