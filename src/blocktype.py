@@ -17,3 +17,5 @@ def block_to_block_type(block):
         return BlockType.CODE
     elif all(line.startswith(">") for line in block.split("\n")):
         return BlockType.QUOTE
+    elif all(line.startswith("- ") for line in block.split("\n")):
+        return BlockType.UNORDERED_LIST
