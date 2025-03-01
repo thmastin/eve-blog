@@ -69,6 +69,14 @@ class TestBlockType(unittest.TestCase):
     def test_code_block_with_embedded_other_code(self):
         block = "```# This is a heading```"
         self.assertIs(block_to_block_type(block), BlockType.CODE)
+    
+    def test_code_no_closing(self):
+        block = "```code block"
+        self.assertIs(block_to_block_type(block), BlockType.PARAGRAPH)
+    
+    def test_quote_mulitple_lines(self):
+        block = ">First Line\n>SecondLine"
+        self.assertIs(block_to_block_type(block), BlockType.QUOTE)
 
 
     
