@@ -63,6 +63,35 @@ class TestMarkdownToHTML(unittest.TestCase):
             html,
             "<div><blockquote>This is a quote with multiple lines and some <b>bold</b> text and some <i>italic</i> text</blockquote></div>",
         )
+    
+    def test_ordered_list(self):
+        md = """
+    1. First item
+    2. Second item with **bold**
+    3. Third item with _italic_
+    4. Fourth item with `code`
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ol><li>First item</li><li>Second item with <b>bold</b></li><li>Third item with <i>italic</i></li><li>Fourth item with <code>code</code></li></ol></div>",
+        )
+
+    def test_unordered_list(self):
+        md = """
+    - First item in the list
+    - Second item with **bold** text
+    - Third item with _italic_ text
+    - Fourth item with `code` elements
+    """
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li>First item in the list</li><li>Second item with <b>bold</b> text</li><li>Third item with <i>italic</i> text</li><li>Fourth item with <code>code</code> elements</li></ul></div>"
+        )
 
 if __name__ == "__main__":
     unittest.main()

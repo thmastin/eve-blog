@@ -21,6 +21,10 @@ def markdown_to_html_node(markdown):
             output_blocks.append(process_heading_block(block))
         elif block_type == BlockType.QUOTE:
             output_blocks.append(process_quote_block(block))
+        elif block_type == BlockType.ORDERED_LIST:
+            output_blocks.append(process_ordered_list_block(block))
+        elif block_type == BlockType.UNORDERED_LIST:
+            output_blocks.append(process_unordered_list_block(block))
 
     return ParentNode("div", output_blocks)
 
@@ -75,3 +79,45 @@ def process_quote_block(block):
 
     quote_node = ParentNode("blockquote", text_node)
     return quote_node
+
+def process_ordered_list_block(block):
+    # break block into lines
+    lines = block.split("\n")
+    
+    # Remove leading "(number). "
+    new_lines = []
+    list_nodes = []
+
+    for line in lines:
+        new_line = line.split(" ")
+        new_lines.append(" ".join(new_line[1:]))
+
+    # Process inline text for each new_line and create ParentNode
+    for line in new_lines:
+        list_nodes.append(ParentNode("li", text_to_children(line)))
+
+    # Make outer node with <ol> tag
+    ordered_list_node = ParentNode("ol", list_nodes)
+
+    return ordered_list_node
+
+def process_unordered_list_block(block):
+    # break block into lines
+    lines = block.split("\n")
+    
+    # Remove leading "(number). "
+    new_lines = []
+    list_nodes = []
+
+    for line in lines:
+        new_line = line.split(" ")
+        new_lines.append(" ".join(new_line[1:]))
+
+    # Process inline text for each new_line and create ParentNode
+    for line in new_lines:
+        list_nodes.append(ParentNode("li", text_to_children(line)))
+
+    # Make outer node with <ol> tag
+    unordered_list_node = ParentNode("ul", list_nodes)
+
+    return unordered_list_node
