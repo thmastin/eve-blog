@@ -49,5 +49,20 @@ class TestMarkdownToHTML(unittest.TestCase):
             "<div><h1>This is a heading</h1><h2>This is a subheading</h2><h3>This is a level 3 heading with <b>bold</b> text</h3></div>",
         )
 
+    def test_quote_block(self):
+        md = """
+    > This is a quote
+    > with multiple lines
+    > and some **bold** text
+    > and some _italic_ text
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><blockquote>This is a quote with multiple lines and some <b>bold</b> text and some <i>italic</i> text</blockquote></div>",
+        )
+
 if __name__ == "__main__":
     unittest.main()

@@ -19,6 +19,8 @@ def markdown_to_html_node(markdown):
             output_blocks.append(process_code_block(block))
         elif block_type == BlockType.HEADING:
             output_blocks.append(process_heading_block(block))
+        elif block_type == BlockType.QUOTE:
+            output_blocks.append(process_quote_block(block))
 
     return ParentNode("div", output_blocks)
 
@@ -55,3 +57,21 @@ def process_heading_block(block):
 
     heading_node = ParentNode(f"h{heading_level}", text_node)
     return heading_node
+
+def process_quote_block(block):
+    # Break block into lines
+    lines = block.split("\n")
+    new_lines = []
+
+    # Remove leading "> " from each line"
+    for line in lines:
+        new_lines.append(line.strip("> "))
+    
+    # Join lines
+    stripped_block = " ".join(new_lines)
+
+    # Handle inlikne html
+    text_node = text_to_children(stripped_block)
+
+    quote_node = ParentNode("blockquote", text_node)
+    return quote_node
