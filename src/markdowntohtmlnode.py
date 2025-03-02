@@ -13,8 +13,7 @@ def markdown_to_html_node(markdown):
         # Determine type of block
         block_type = block_to_block_type(block)
         if block_type == BlockType.PARAGRAPH:
-            modified_block = block.replace("\n", " ")
-            output_blocks.append(ParentNode("p", text_to_children(modified_block)))
+            output_blocks.append(process_paragraph_block(block))
         elif block_type == BlockType.CODE:
             output_blocks.append(process_code_block(block))
         elif block_type == BlockType.HEADING:
@@ -40,6 +39,8 @@ def text_to_children(text):
 def process_code_block(block):
     lines = block.split("\n")
     code_content = "\n".join(lines[1:-1]) + "\n"
+    
+    # Add this print statement
     
     text_node = TextNode(code_content, TextType.TEXT)
     code_html_node = text_node_to_html_node(text_node)
@@ -121,3 +122,9 @@ def process_unordered_list_block(block):
     unordered_list_node = ParentNode("ul", list_nodes)
 
     return unordered_list_node
+
+def process_paragraph_block(block):
+    modified_block = block.replace("\n", " ")
+
+    paragraph_block = ParentNode("p", text_to_children(modified_block))
+    return paragraph_block

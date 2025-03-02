@@ -93,5 +93,14 @@ class TestMarkdownToHTML(unittest.TestCase):
             "<div><ul><li>First item in the list</li><li>Second item with <b>bold</b> text</li><li>Third item with <i>italic</i> text</li><li>Fourth item with <code>code</code> elements</li></ul></div>"
         )
 
+    def test_comprehensive_markdown(self):
+        markdown = "# Heading Level 1\n\nThis is a paragraph with **bold** and _italic_ text.\n\n## Heading Level 2\n\n- List item 1\n- List item 2\n- List item 3\n\n1. Ordered item 1\n2. Ordered item 2\n3. Ordered item 3\n\n> This is a blockquote\n> with multiple lines\n\n```\ndef hello_world():\n    print(\"Hello, world!\")\n```\n\nFinal paragraph here."
+        
+        expected = "<div><h1>Heading Level 1</h1><p>This is a paragraph with <b>bold</b> and <i>italic</i> text.</p><h2>Heading Level 2</h2><ul><li>List item 1</li><li>List item 2</li><li>List item 3</li></ul><ol><li>Ordered item 1</li><li>Ordered item 2</li><li>Ordered item 3</li></ol><blockquote>This is a blockquote with multiple lines</blockquote><pre><code>def hello_world():\n    print(\"Hello, world!\")\n</code></pre><p>Final paragraph here.</p></div>"
+        
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(html, expected)
+
 if __name__ == "__main__":
     unittest.main()
