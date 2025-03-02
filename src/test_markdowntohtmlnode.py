@@ -33,7 +33,21 @@ class TestMarkdownToHTML(unittest.TestCase):
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
 
+    def test_heading(self):
+        md = """
+    # This is a heading
 
+    ## This is a subheading
+
+    ### This is a level 3 heading with **bold** text
+    """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h1>This is a heading</h1><h2>This is a subheading</h2><h3>This is a level 3 heading with <b>bold</b> text</h3></div>",
+        )
 
 if __name__ == "__main__":
     unittest.main()

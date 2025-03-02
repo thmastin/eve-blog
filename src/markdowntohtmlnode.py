@@ -17,6 +17,9 @@ def markdown_to_html_node(markdown):
             output_blocks.append(ParentNode("p", text_to_children(modified_block)))
         elif block_type == BlockType.CODE:
             output_blocks.append(process_code_block(block))
+        elif block_type == BlockType.HEADING:
+            output_blocks.append(process_heading_block(block))
+
     return ParentNode("div", output_blocks)
 
 def text_to_children(text):
@@ -30,7 +33,6 @@ def text_to_children(text):
 
 def process_code_block(block):
     lines = block.split("\n")
-    # Make sure to include the final newline that the test expects
     code_content = "\n".join(lines[1:-1]) + "\n"
     
     text_node = TextNode(code_content, TextType.TEXT)
@@ -39,3 +41,17 @@ def process_code_block(block):
     code_node = ParentNode("code", [code_html_node])
     pre_node = ParentNode("pre", [code_node])
     return pre_node
+
+def process_heading_block(block):
+    words = block.split(" ")
+    # Count # for tag
+    heading_level = len(words[0])
+
+    # Rejoin content without the # and leading space
+    heading_content = " ".join(words[1:])
+
+    # Handle inline html
+    text_node = text_to_children(heading_content)
+
+    heading_node = ParentNode(f"h{heading_level}", text_node)
+    return heading_node
