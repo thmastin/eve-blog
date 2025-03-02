@@ -78,6 +78,32 @@ class TestBlockType(unittest.TestCase):
         block = ">First Line\n>SecondLine"
         self.assertIs(block_to_block_type(block), BlockType.QUOTE)
 
+    def test_empty_quote(self):
+        block = ">"
+        self.assertIs(block_to_block_type(block), BlockType.QUOTE)
+
+    def test_mixed_quote(self):
+        block = ">this is a quote\n# this is a hash>this is a quote"
+        self.assertIs(block_to_block_type(block), BlockType.PARAGRAPH)
+
+    def test_uonordered_empty(self):
+        block = "- "
+        self.assertIs(block_to_block_type(block), BlockType.UNORDERED_LIST)
+
+    def test_unordereed_no_space(self):
+        block = "-this is a quote"
+        self.assertIs(block_to_block_type(block), BlockType.PARAGRAPH)
+
+    def test_ordered_no_space(self):
+        block = "1.line one\n2.line two"
+        self.assertIs(block_to_block_type(block), BlockType.PARAGRAPH)
+
+    def test_ordered_does_not_start_wtith_1(self):
+        block = "2. line one"
+        self.assertIs(block_to_block_type(block), BlockType.PARAGRAPH)
+
+    
+
 
     
 
