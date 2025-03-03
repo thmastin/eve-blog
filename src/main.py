@@ -1,12 +1,9 @@
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode, LeafNode
+from copydirectory import copy_directory
 
 def main():
-    #Create a test node and print it to verify TextNode implmentation
-    textnode = TextNode("This is a text node", TextType.BOLD, "https://example.com")
-    print(textnode)
-    leafnode = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-    print(leafnode)
+    copy_directory("src", "static")
 
 if __name__ == "__main__":
     main()
