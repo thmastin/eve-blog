@@ -25,8 +25,7 @@ def generate_page(from_path, template_path, dest_path):
     final_page = template_string.replace("{{ Title }}", page_title)
     final_page = final_page.replace("{{ Content }}", page_html)
 
-    if not os.path.exists(dest_path):
-        os.mkdirs(dest_path)
+    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     
     with open(dest_path, "w") as f:
         f.write(final_page)
