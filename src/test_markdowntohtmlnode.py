@@ -102,5 +102,17 @@ class TestMarkdownToHTML(unittest.TestCase):
         html = node.to_html()
         self.assertEqual(html, expected)
 
+    def test_quote_block_from_excercise(self):
+        markdown =  """
+    > "I am in fact a Hobbit in all but size."
+    >
+    > -- J.R.R. Tolkien
+    """
+        expected = '<div><blockquote>"I am in fact a Hobbit in all but size." -- J.R.R. Tolkien</blockquote></div>'
+
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(html, expected)
+
 if __name__ == "__main__":
     unittest.main()

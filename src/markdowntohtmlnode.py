@@ -70,11 +70,13 @@ def process_quote_block(block):
 
     # Remove leading "> " from each line"
     for line in lines:
-        new_lines.append(line.strip("> "))
+        stripped_line = line.strip("> ").strip()
+        if stripped_line:
+            new_lines.append(stripped_line)
     
     # Join lines
     stripped_block = " ".join(new_lines)
-
+    
     # Handle inlikne html
     text_node = text_to_children(stripped_block)
 
