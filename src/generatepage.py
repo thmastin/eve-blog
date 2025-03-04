@@ -29,6 +29,26 @@ def generate_page(from_path, template_path, dest_path):
     
     with open(dest_path, "w") as f:
         f.write(final_page)
-    
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    # Ensure the destination directory exists
+    if not os.path.exists(dest_dir_path):
+        os.makedirs(dest_dir_path)
+        
+    for item in os.listdir(dir_path_content):
+        src_path = os.path.join(dir_path_content, item)
+        
+        if os.path.isfile(src_path) and src_path.endswith(".md"):
+            # Change the extension from .md to .html
+            dest_file = item.replace(".md", ".html")
+            dest_path = os.path.join(dest_dir_path, dest_file)
+            generate_page(src_path, template_path, dest_path)
+        elif os.path.isdir(src_path):
+            # Create subdirectory in destination
+            sub_dest_dir = os.path.join(dest_dir_path, item)
+            if not os.path.exists(sub_dest_dir):
+                os.makedirs(sub_dest_dir)
+            # Recursive call with updated source and destination paths
+            generate_pages_recursive(src_path, template_path, sub_dest_dir)
 
 
