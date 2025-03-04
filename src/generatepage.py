@@ -7,7 +7,7 @@ def extract_title(markdown):
             return line.strip("# ")
     raise Exception("No heading in markdown file")
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page {from_path} to {dest_path} using {template_path}")
     
     #Open files and create strings
@@ -24,13 +24,15 @@ def generate_page(from_path, template_path, dest_path):
 
     final_page = template_string.replace("{{ Title }}", page_title)
     final_page = final_page.replace("{{ Content }}", page_html)
+    final_page = final_page.replace('href="/', basepath)
+    final_page = final_page.replace('src="/', basepath)
 
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     
     with open(dest_path, "w") as f:
         f.write(final_page)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     # Ensure the destination directory exists
     if not os.path.exists(dest_dir_path):
         os.makedirs(dest_dir_path)
@@ -42,13 +44,13 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             # Change the extension from .md to .html
             dest_file = item.replace(".md", ".html")
             dest_path = os.path.join(dest_dir_path, dest_file)
-            generate_page(src_path, template_path, dest_path)
+            generate_page(src_path, template_path, dest_path, basepath)
         elif os.path.isdir(src_path):
             # Create subdirectory in destination
             sub_dest_dir = os.path.join(dest_dir_path, item)
             if not os.path.exists(sub_dest_dir):
                 os.makedirs(sub_dest_dir)
             # Recursive call with updated source and destination paths
-            generate_pages_recursive(src_path, template_path, sub_dest_dir)
+            generate_pages_recursive(src_path, template_path, sub_dest_dir, basepath)
 
 
