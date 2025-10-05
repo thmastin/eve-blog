@@ -10,4 +10,4 @@ I've dabbled over the years, but now I'm taking a shot at starting a station tra
 
 ## Blog Posts
 
-- [Introduction: What I'm doing]()
+- [Introduction: What I'm doing](/blog/1-introduction/)
