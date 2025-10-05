@@ -1,46 +1,24 @@
-# Tolkien Fan Club
+# Eve Station Trading
 
-![JRR Tolkien sitting](/images/tolkien.png)
+![Silas Swift Headshot](/images/silasswift.jpg)
 
-Here's the deal, **I like Tolkien**.
+Eve Online is a sandbox MMO that is about space, diplomacy, conflict, and anything else you can think of.
 
-> "I am in fact a Hobbit in all but size."
->
-> -- J.R.R. Tolkien
+What's always intersted me is the **almost entirely player driven market.**
+
+I've dabbled over the years, but now I'm taking a shot at starting a station trading character.  This is a log of the journey he is taking
 
 ## Blog posts
 
-- [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
-- [Why Tom Bombadil Was a Mistake](/blog/tom)
-- [The Unparalleled Majesty of "The Lord of the Rings"](/blog/majesty)
+- [Introduction: What I'm doing]()
 
-## Reasons I like Tolkien
+## Are you interested in trying Eve Online?
 
-- You can spend years studying the legendarium and still not understand its depths
-- It can be enjoyed by children and adults alike
-- Disney _didn't ruin it_ (okay, but Amazon might have)
-- It created an entirely new genre of fantasy
+Using [this link](https://www.eveonline.com/signup?invc=1aa2c08c-5800-4223-94e2-41d28ac5f94c) you can try out Eve fpr **free**
 
-## My favorite characters (in order)
+- You'll get 1 Million Skill Points for training to get you started
+- I do get some goodies when you use my link.
 
-1. Gandalf
-2. Bilbo
-3. Sam
-4. Glorfindel
-5. Galadriel
-6. Elrond
-7. Thorin
-8. Sauron
-9. Aragorn
-
-Here's what `elflang` looks like (the perfect coding language):
-
-```
-func main(){
-    fmt.Println("Aiya, Ambar!")
-}
-```
-
-Want to get in touch? [Contact me here](/contact).
+Want to get in touch? [Contact me here]().
 
 This site was generated with a custom-built [static site generator](https://www.boot.dev/courses/build-static-site-generator-python) from the course on [Boot.dev](https://www.boot.dev).
