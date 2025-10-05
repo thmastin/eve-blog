@@ -1,6 +1,6 @@
 # Eve Station Trading
 
-![Silas Swift Headshot](/images/silasswift.png)
+![Silas Swift Headshot](./images/silasswift.png)
 
 Eve Online is a sandbox MMO that is about space, diplomacy, conflict, and anything else you can think of.
 
