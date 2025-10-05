@@ -1,3 +1,3 @@
-# staticsitegenerator
+# Eve Blog
 
-This is my third project for Boot.Dev
+This is an eve blog chronicaling the use of Eve Guru and station trading with a brand new alt.
