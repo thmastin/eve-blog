@@ -2,8 +2,7 @@
 
 [< Back Home](/)
 
-Give me a call anytime to chat about Tolkien!
+Toss me an email anytime to chat! Or send Silas Swift an Eve Mail in game.
 
-`555-555-5555`
+<hpadres76@gmail.com>
 
-**"Váya márië."**
