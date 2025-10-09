@@ -1,4 +1,4 @@
-## 10/08/25he First Update
+## 10/08/25 The First Update
 
 It was a good first couple of days of trading in Dodixie.  Using Eve Guru I was able t identify some opportunities to grow our small balance to a bigger one. The current challenge is getting Buy Orders filled so we have some stock to sell.
 
